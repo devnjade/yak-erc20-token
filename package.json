@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "git": "git add . && git commit -m 'update' && git push",
+    "compile": "yarn hardhat compile",
+    "deploy:ropsten": "yarn hardhat run --network ropsten scripts/deploy.ts",
+    "clean": "yarn hardhat clean"
+  },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",
     "@ethersproject/providers": "^5.4.7",
