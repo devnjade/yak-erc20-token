@@ -9,21 +9,31 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract YakToken is Ownable, ERC20, ReentrancyGuard {
     uint256 public totalTokenSupply;
     uint256 public claimAmount;
-
     uint256 public totalAddressesAllowed;
+
+    bool public enableClaim;
 
     mapping(address => bool) addresses;
     mapping(address => uint256) amountOfClaims;
 
     constructor() ERC20("Yak", "YAK") {
         totalAddressesAllowed = 0;
+        claimAmount = 0;
     }
 
     function totalClaimed() public view returns (uint256) {
         return totalTokenSupply;
     }
 
-    function mint(address to) public onlyOwner {
+    function totalTimesAddrClaimed(address addr) public view returns (uint256) {
+        return amountOfClaims[addr];
+    }
+
+    function setClaiming(bool enable) public {
+        enableClaim = enable;
+    }
+
+    function mint(address to) public nonReentrant {
         require(verifyAddress(to), "Address not allowed to claim token");
         require(amountOfClaims[to] == 0, "Address already claimed");
 
