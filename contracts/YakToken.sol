@@ -37,7 +37,7 @@ contract YakToken is Ownable, ERC20, ReentrancyGuard {
         require(verifyAddress(to), "Address not allowed to claim token");
         require(amountOfClaims[to] == 0, "Address already claimed");
 
-        _mint(to, claimAmount);
+        _mint(to, claimAmount * 1e18);
         amountOfClaims[to]--;
         totalTokenSupply += claimAmount;
     }
